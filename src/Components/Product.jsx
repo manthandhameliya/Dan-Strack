@@ -26,6 +26,7 @@ const Product = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  useEffect(() => {})
   const [language, setLanguage] = useState("English");
   const handleLanguageChange = (newLanguage) => {
     setLanguage(newLanguage);
