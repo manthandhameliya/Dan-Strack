@@ -77,30 +77,30 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     const newErrors = {};
-  
+
     if (!email) {
       newErrors.email = "Please fill out this field.";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-  
+
     if (!password) {
       newErrors.password = "Please fill out this field.";
     } else if (password.length < 6) {
       newErrors.password = "Password must be at least 6 characters.";
     }
-  
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-  
+
     setErrors({});
     navigate("/home");
   };
-  
+
   return (
     <div className="relative grid place-items-center min-h-[1070px] bg-[#5689ffe2] font-nunito overflow-hidden">
       {/* Background Shapes */}
@@ -110,113 +110,115 @@ const Login = () => {
       <div className="relative z-10 bg-[#FFFFFF] rounded-[24px] shadow-lg border-[0.3px] border-[#B9B9B9] lg:px-12 lg:py-16  px-6 py-8 sm:px-8 sm:py-12 md:px-10 md:py-14">
         {/* Title */}
         <h1 className="text-center font-nunito text-[#202224] text-[18px] leading-[26px] sm:text-[20px] sm:leading-[28px] md:text-[24px] md:leading-[32px] lg:text-[32px] lg:leading-[43.65px] font-bold">
-    Login to Account
-  </h1>
+          Login to Account
+        </h1>
 
-
-  <p className="text-center font-nunito text-[#202224] text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] md:text-[18px] md:leading-[26px] lg:leading-[24.55px] tracking-[-0.06px] lg:text-[18px] mb-6 sm:mb-8 md:mb-10 lg:py-3 py-3">
-    Please enter your email and password to continue
-  </p>
+        <p className="text-center font-nunito text-[#202224] text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] md:text-[18px] md:leading-[26px] lg:leading-[24.55px] tracking-[-0.06px] lg:text-[18px] mb-6 sm:mb-8 md:mb-10 lg:py-3 py-3">
+          Please enter your email and password to continue
+        </p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-        <div className="space-y-2">
-  <label
-    className="font-nunito text-[#202224] text-[14px] sm:text-[16px] md:text-[18px] lg:leading-[24.55px] tracking-[-0.06px]"
-    htmlFor="email"
-  >
-    Email address:
-  </label>
-  <input
-    type="email"
-    id="email"
-    placeholder="esteban_schiller@gmail.com"
-    value={email}
-    onChange={(e) => {
-      const value = e.target.value;
-      setEmail(value);
+          <div className="space-y-2">
+            <label
+              className="font-nunito text-[#202224] text-[14px] sm:text-[16px] md:text-[18px] lg:leading-[24.55px] tracking-[-0.06px]"
+              htmlFor="email"
+            >
+              Email address:
+            </label>
+            <input
+              type="email"
+              id="email"
+              placeholder="esteban_schiller@gmail.com"
+              value={email}
+              onChange={(e) => {
+                const value = e.target.value;
+                setEmail(value);
 
-      if (/\S+@\S+\.\S+/.test(value)) {
-        setErrors((prevErrors) => ({ ...prevErrors, email: null }));
-      }
-    }}
-    className={`w-full px-4 py-3 border-[1px] rounded-[8px] shadow-sm focus:outline-none text-[14px] sm:text-[16px] md:text-[18px] placeholder:text-[#A6A6A6] ${
-      errors.email
-        ? "border-red-500 focus:ring-red-500"
-        : "border-[#D8D8D8] focus:ring-[#A6A6A6]"
-    }`}
-  />
-  {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
-</div>
-
-{/* Password */}
-<div className="space-y-2">
-  <div className="flex justify-between items-center">
-    <label
-      className="font-nunito text-[#202224] text-[14px] sm:text-[16px] md:text-[18px] lg:leading-[24.55px] tracking-[-0.06px]"
-      htmlFor="password"
-    >
-      Password
-    </label>
-    <a
-      href="#"
-      className="font-nunito text-[#202224] text-[12px] sm:text-[14px] md:text-[16px] lg:leading-[24.55px] tracking-[-0.06px]"
-    >
-      Forgot Password?
-    </a>
-  </div>
-  <input
-    type="password"
-    id="password"
-    placeholder="• • • • • •"
-    value={password}
-    onChange={(e) => {
-      const value = e.target.value;
-      setPassword(value);
-
-      // Remove error if password becomes valid
-      if (value.length >= 6) {
-        setErrors((prevErrors) => ({ ...prevErrors, password: null }));
-      }
-    }}
-    className={`w-full px-4 py-3 border-[1px] rounded-[8px] shadow-sm focus:outline-none text-[14px] sm:text-[16px] md:text-[18px] placeholder:text-[#A6A6A6] ${
-      errors.password
-        ? "border-red-500 focus:ring-red-500"
-        : "border-[#D8D8D8] focus:ring-[#A6A6A6]"
-    }`}
-  />
-  {errors.password && (
-    <div className="text-red-500 text-sm">{errors.password}</div>
-  )}
-</div>
-
-
-    {/* Remember Password */}
-    <div className="flex items-center">
-      <input
-        type="checkbox"
-        id="remember"
-        className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#000000] rounded-[6px] border-[1px] border-[#A3A3A3] focus:ring-[#A6A6A6] focus:border-[#A6A6A6] accent-[#656565]"
-      />
-      <label
-        htmlFor="remember"
-        className="ml-2 text-[12px] sm:text-[14px] md:text-[16px] text-[#202224] tracking-[-0.06px]"
-      >
-        Remember Password
-      </label>
-    </div>
-
-    {/* Submit Button */}
-    <div className="lg:pt-5">
-    <button
-  type="submit"
-  className="w-full sm:w-[350px] md:w-[418px] lg:w-[418px] min-h-[56px] mx-auto bg-[#4880FF] text-white rounded-[8px] hover:bg-[#4A75DB] transition-colors font-semibold text-[14px] sm:text-[16px]"
->
-  Sign In
-</button>
-
+                if (/\S+@\S+\.\S+/.test(value)) {
+                  setErrors((prevErrors) => ({ ...prevErrors, email: null }));
+                }
+              }}
+              className={`w-full px-4 py-3 border-[1px] rounded-[8px] shadow-sm focus:outline-none text-[14px] sm:text-[16px] md:text-[18px] placeholder:text-[#A6A6A6] ${
+                errors.email
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-[#D8D8D8] focus:ring-[#A6A6A6]"
+              }`}
+            />
+            {errors.email && (
+              <div className="text-red-500 text-sm">{errors.email}</div>
+            )}
           </div>
-  </form>
+
+          {/* Password */}
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <label
+                className="font-nunito text-[#202224] text-[14px] sm:text-[16px] md:text-[18px] lg:leading-[24.55px] tracking-[-0.06px]"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <a
+                href="#"
+                className="font-nunito text-[#202224] text-[12px] sm:text-[14px] md:text-[16px] lg:leading-[24.55px] tracking-[-0.06px]"
+              >
+                Forgot Password?
+              </a>
+            </div>
+            <input
+              type="password"
+              id="password"
+              placeholder="• • • • • •"
+              value={password}
+              onChange={(e) => {
+                const value = e.target.value;
+                setPassword(value);
+
+                // Remove error if password becomes valid
+                if (value.length >= 6) {
+                  setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    password: null,
+                  }));
+                }
+              }}
+              className={`w-full px-4 py-3 border-[1px] rounded-[8px] shadow-sm focus:outline-none text-[14px] sm:text-[16px] md:text-[18px] placeholder:text-[#A6A6A6] ${
+                errors.password
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-[#D8D8D8] focus:ring-[#A6A6A6]"
+              }`}
+            />
+            {errors.password && (
+              <div className="text-red-500 text-sm">{errors.password}</div>
+            )}
+          </div>
+
+          {/* Remember Password */}
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="remember"
+              className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-[#000000] rounded-[6px] border-[1px] border-[#A3A3A3] focus:ring-[#A6A6A6] focus:border-[#A6A6A6] accent-[#656565]"
+            />
+            <label
+              htmlFor="remember"
+              className="ml-2 text-[12px] sm:text-[14px] md:text-[16px] text-[#202224] tracking-[-0.06px]"
+            >
+              Remember Password
+            </label>
+          </div>
+
+          {/* Submit Button */}
+          <div className="lg:pt-5">
+            <button
+              type="submit"
+              className="w-full sm:w-[350px] md:w-[418px] lg:w-[418px] min-h-[56px] mx-auto bg-[#4880FF] text-white rounded-[8px] hover:bg-[#4A75DB] transition-colors font-semibold text-[14px] sm:text-[16px]"
+            >
+              Sign In
+            </button>
+          </div>
+        </form>
 
         {/* Footer */}
         <p className="text-[14px] text-[#202224] lg:leading-[24.55px] tracking-[-0.06px] lg:text-[18px] mt-4">
