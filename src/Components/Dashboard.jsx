@@ -50,9 +50,9 @@ const Dashboard = () => {
     setIsDropdownOpen(false);
   };
   const mainMenuItems = [
-    { icon: Dashboards, label: "Dashboard", link: "/home" },
+    { icon: Dashboards, label: "Dashboard", link: "/dashboard" },
     { icon: Products, label: "Products", link: "/products" },
-    { icon: Favorites, label: "Favorites" },
+    { icon: Favorites, label: "Favorites", link: "/favorite" },
     { icon: Inbox, label: "Inbox" },
     { icon: OrderLists, label: "Order Lists" },
     { icon: ProductStock, label: "Product Stock" },

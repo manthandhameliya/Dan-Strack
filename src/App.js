@@ -1,16 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Components/Login";
-import Home from "./Components/Home";
 import Product from "./Components/Product";
 import "./index.css";
+import Favorite from "./Components/Favorite";
+import Dashboard from "./Components/Dashboard";
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/products" element={<Product />} />
+        <Route path="/Favorite" element={<Favorite />} />
       </Routes>
     </Router>
   );

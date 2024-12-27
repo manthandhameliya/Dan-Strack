@@ -98,7 +98,7 @@ const Login = () => {
     }
 
     setErrors({});
-    navigate("/home");
+    navigate("/Dashboard");
   };
 
   return (
