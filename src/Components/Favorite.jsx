@@ -59,9 +59,41 @@ const Favorite = () => {
   ];
 
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    setFavorites(storedFavorites);
+    // Load favorites from localStorage when component mounts
+    const loadFavorites = () => {
+      const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      setFavorites(storedFavorites);
+    };
+
+    loadFavorites();
+    // Add event listener for storage changes
+    window.addEventListener('storage', loadFavorites);
+    const handleRemoveFavorite = (productId) => {
+      // Remove from state
+      const updatedFavorites = favorites.filter(fav => fav.id !== productId);
+      setFavorites(updatedFavorites);
+      
+      // Update localStorage
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      
+      // Dispatch storage event to update other components
+      window.dispatchEvent(new Event('storage'));
+    };
+    return () => {
+      window.removeEventListener('storage', loadFavorites);
+    };
   }, []);
+  const handleRemoveFavorite = (productId) => {
+    // Remove from state
+    const updatedFavorites = favorites.filter(fav => fav.id !== productId);
+    setFavorites(updatedFavorites);
+    
+    // Update localStorage
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    
+    // Dispatch storage event to update other components
+    window.dispatchEvent(new Event('storage'));
+  };
   const handlePrevVariant = (e) => {
     e.stopPropagation();
     setCurrentVariant((prev) => (prev === 0 ? totalVariants - 1 : prev - 1));
@@ -171,7 +203,7 @@ const Favorite = () => {
         </nav>
       </div>
 
-      {/* Main Content */}``
+      {/* Main Content */}
       <div className="flex-1 ">
         {" "}
         {/* Header */}
@@ -320,84 +352,69 @@ const Favorite = () => {
           </div>
         </header>
         {/* product-content */}
-        <main
-          className="bg-[#F5F6FA] min-h-[1070px] p-6
-      "
-        >
-          <div className="top-heading font-nunito lg:text-[32px] lg:leading-[43.65px] text-[#202224] tracking-[-0.11px] font-bold mb-5">
-            Favorites
-          </div>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 pt-5">
-            {favorites.length === 0 ? (
-              <p>No favorite products yet.</p>
-            ) : (
-              favorites.map((product, index) => (
-                <div
-                  key={index}
-                  className="bg-[#FFFFFF] rounded-lg p-5 shadow-[6px_6px_54px_0px #0000000D] w-full sm:max-w-[361px] md:max-w-[450px] lg:max-w-[361px] flex-grow"
-                >
-                  {/* Product Image */}
-                  <div className="relative mb-4">
-                    <div className="relative  rounded-lg aspect-square">
-                      <img
-                        src={product.image || LikedImage}
-                        alt={product.name}
-                        className="object-cover transition-all duration-500 mx-auto"
-                      />
-                    </div>
-                    <button
-                      onClick={handlePrevVariant}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-[#E2EAF8] rounded-full p-1 hover:bg-[#E2EAF8] transition-colors opacity-75"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={handleNextVariant}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#E2EAF8] rounded-full p-1 hover:bg-[#E2EAF8] transition-colors opacity-75"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="space-y-2">
-                    <h3 className="font-nunito font-bold text-[#202224] text-[16px] sm:text-[18px] lg:text-[20px]">
-                      {product.name}
-                    </h3>
-
-                    {/* Price and Heart Icon */}
-                    <div className="flex justify-between items-center">
-                      <p className="text-[#4880FF] font-nunito font-bold text-[14px] sm:text-[16px] lg:text-[18px]">
-                        ${product.price.toFixed(2)}
-                      </p>
-                      <button
-                        className="p-1 rounded-full hover:bg-gray-100 transition-colors"
-                        disabled
-                      >
-                        <Heart className="w-5 h-5 transition-colors bg-[#F9F9F9] rounded-[50%] text-[#F93C65]" />
-                      </button>
-                    </div>
-
-                    {/* Rating */}
-                    <div className="flex items-center gap-1">
-                      {renderStars(product.rating)}
-                      <span className="text-gray-500 text-sm ml-1">
-                        ({product.reviews})
-                      </span>
-                    </div>
-
-                    {/* Edit Button */}
-                    <div className="pt-3">
-                      <button className="px-4 py-1 bg-[#E2EAF8] text-[#202224] rounded-[12px] text-[14px] leading-[28px] font-bold hover:bg-gray-200 transition-colors">
-                        Edit Product
-                      </button>
-                    </div>
-                  </div>
+        <main className="bg-[#F5F6FA] min-h-[1070px] p-6">
+      <div className="top-heading font-nunito lg:text-[32px] lg:leading-[43.65px] text-[#202224] tracking-[-0.11px] font-bold mb-5">
+        Favorites
+      </div>
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 pt-5">
+        {favorites.length === 0 ? (
+          <p className="text-[#202224] font-nunito">No favorite products yet.</p>
+        ) : (
+          favorites.map((product) => (
+            <div
+              key={product.id}
+              className="bg-[#FFFFFF] rounded-lg p-5 shadow-[6px_6px_54px_0px #0000000D] w-full sm:max-w-[361px] md:max-w-[450px] lg:max-w-[361px] flex-grow"
+            >
+              {/* Product Image */}
+              <div className="relative mb-4">
+                <div className="relative rounded-lg aspect-square">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="object-contain transition-all duration-500 mx-auto h-full w-full"
+                  />
                 </div>
-              ))
-            )}
-          </div>
-        </main>
+              </div>
+
+              {/* Product Info */}
+              <div className="space-y-2">
+                <h3 className="font-nunito font-bold text-[#202224] text-[16px] sm:text-[18px] lg:text-[20px] line-clamp-2">
+                  {product.title}
+                </h3>
+
+                {/* Price and Heart Icon */}
+                <div className="flex justify-between items-center">
+                  <p className="text-[#4880FF] font-nunito font-bold text-[14px] sm:text-[16px] lg:text-[18px]">
+                    ${product.price.toFixed(2)}
+                  </p>
+                  <button
+                    onClick={() => handleRemoveFavorite(product.id)}
+                    className="p-1 rounded-full hover:bg-gray-100 transition-colors"
+                  >
+                    <Heart className="w-5 h-5 transition-colors bg-[#F9F9F9] rounded-[50%] fill-[#F93C65] text-[#F93C65]" />
+                  </button>
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center gap-1">
+                  {renderStars(product.rating)}
+                  <span className="text-gray-500 text-sm ml-1">
+                    ({product.reviews})
+                  </span>
+                </div>
+
+                {/* Edit Button */}
+                <div className="pt-3">
+                  <button className="px-4 py-1 bg-[#E2EAF8] text-[#202224] rounded-[12px] text-[14px] leading-[28px] font-bold hover:bg-gray-200 transition-colors">
+                    Edit Product
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </main>
       </div>
     </div>
   );
