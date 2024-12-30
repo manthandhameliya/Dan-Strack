@@ -8,9 +8,9 @@ const ProductCard = ({ product }) => {
   const [currentImage, setCurrentImage] = useState(product.image);
 
   // Check if product is already liked when component mounts
-    useEffect(() => {
+  useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const isProductLiked = favorites.some(fav => fav.id === product.id);
+    const isProductLiked = favorites.some((fav) => fav.id === product.id);
     setIsLiked(isProductLiked);
     // Set initial image based on liked status
     setCurrentImage(product.image);
@@ -45,14 +45,16 @@ const ProductCard = ({ product }) => {
     e.stopPropagation();
     setIsLiked((prev) => {
       const newLikedStatus = !prev;
-      
+
       // Get existing favorites from local storage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      
+
       if (newLikedStatus) {
         // Check if product is already in favorites
-        const isAlreadyFavorite = favorites.some(fav => fav.id === product.id);
-        
+        const isAlreadyFavorite = favorites.some(
+          (fav) => fav.id === product.id
+        );
+
         if (!isAlreadyFavorite) {
           // Add to favorites only if not already present
           const favoriteProduct = {
@@ -61,9 +63,9 @@ const ProductCard = ({ product }) => {
             price: product.price,
             image: product.image,
             rating: rating,
-            reviews: reviews
+            reviews: reviews,
           };
-          
+
           favorites.push(favoriteProduct);
           localStorage.setItem("favorites", JSON.stringify(favorites));
 
@@ -72,13 +74,15 @@ const ProductCard = ({ product }) => {
         }
       } else {
         // Remove from favorites if unliked
-        const updatedFavorites = favorites.filter(fav => fav.id !== product.id);
+        const updatedFavorites = favorites.filter(
+          (fav) => fav.id !== product.id
+        );
         localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
 
         // Reset image to original with transition effect
         setCurrentImage(product.image);
       }
-      
+
       return newLikedStatus;
     });
   };
@@ -92,7 +96,7 @@ const ProductCard = ({ product }) => {
             src={currentImage}
             alt={product.title}
             className={`object-contain transition-all duration-500 mx-auto h-full w-full ${
-              isLiked ? 'scale-110' : 'scale-100'
+              isLiked ? "scale-110" : "scale-100"
             }`}
           />
         </div>
@@ -146,9 +150,9 @@ const ProductGrid = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('https://fakestoreapi.com/products');
+        const response = await fetch("https://fakestoreapi.com/products");
         if (!response.ok) {
-          throw new Error('Failed to fetch products');
+          throw new Error("Failed to fetch products");
         }
         const data = await response.json();
         setProducts(data);

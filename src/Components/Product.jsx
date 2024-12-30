@@ -1,4 +1,4 @@
-    import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import Fleg from "../images/Flag.svg";
 import DownArrow from "../images/Shape.jpg";
