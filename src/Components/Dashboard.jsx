@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Menu } from "lucide-react";
-import Fleg from "../images/Flag.jpg";
+import Fleg from "../images/Flag.svg";
 import DownArrow from "../images/Shape.jpg";
 import MonyRoy from "../images/man-438081_960_720.svg";
 import Dashboards from "../images/.svg";
