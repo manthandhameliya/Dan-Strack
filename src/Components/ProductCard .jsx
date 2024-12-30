@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
   const [currentImage, setCurrentImage] = useState(product.image);
 
   // Check if product is already liked when component mounts
-  useEffect(() => {
+    useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const isProductLiked = favorites.some(fav => fav.id === product.id);
     setIsLiked(isProductLiked);
