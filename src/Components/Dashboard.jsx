@@ -31,7 +31,7 @@ import Settings from "../images/Settings.svg";
 import Logout from "../images/Logout.svg";
 import users from "../images/users.svg.svg";
 import Path from "../images/Path.svg";
-import down from "../images/down.svg";
+// import down from "../images/down.svg";
 import orders from "../images/orders.svg";
 import Sales from "../images/sales.svg";
 import Pending from "../images/pending.svg";

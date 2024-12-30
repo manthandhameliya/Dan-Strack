@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, Heart, Menu, Star } from "lucide-react";
+import {Heart, Menu, Star } from "lucide-react";
 import Fleg from "../images/Flag.jpg";
 import DownArrow from "../images/Shape.jpg";
 import MonyRoy from "../images/man-438081_960_720.svg";
@@ -20,7 +20,7 @@ import Table from "../images/Table.svg";
 import Settings from "../images/Settings.svg";
 import Logout from "../images/Logout.svg";
 import { Link } from "react-router-dom";
-import LikedImage from "../images/LikedImage.svg"; // Path to the uploaded liked image
+// import LikedImage from "../images/LikedImage.svg"; // Path to the uploaded liked image
 
 const Favorite = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -94,17 +94,17 @@ const Favorite = () => {
     // Dispatch storage event to update other components
     window.dispatchEvent(new Event('storage'));
   };
-  const handlePrevVariant = (e) => {
-    e.stopPropagation();
-    setCurrentVariant((prev) => (prev === 0 ? totalVariants - 1 : prev - 1));
-  };
+  // const handlePrevVariant = (e) => {
+  //   e.stopPropagation();
+  //   setCurrentVariant((prev) => (prev === 0 ? totalVariants - 1 : prev - 1));
+  // };
 
-  const handleNextVariant = (e) => {
-    e.stopPropagation();
-    setCurrentVariant((prev) => (prev + 1) % totalVariants);
-  };
-  const [currentVariant, setCurrentVariant] = useState(0);
-  const totalVariants = 3;
+  // const handleNextVariant = (e) => {
+  //   e.stopPropagation();
+  //   setCurrentVariant((prev) => (prev + 1) % totalVariants);
+  // };
+  // const [currentVariant, setCurrentVariant] = useState(0);
+  // const totalVariants = 3;
 
   const renderStars = (rating) => {
     return Array(5)
