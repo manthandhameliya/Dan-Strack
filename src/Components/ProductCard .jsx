@@ -48,7 +48,7 @@ const ProductCard = ({ product }) => {
 
       // Get existing favorites from local storage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
+      console.log(favorites, "localstorege favorite");
       if (newLikedStatus) {
         // Check if product is already in favorites
         const isAlreadyFavorite = favorites.some(
@@ -65,6 +65,7 @@ const ProductCard = ({ product }) => {
             rating: rating,
             reviews: reviews,
           };
+          console.log(favoriteProduct, "favorite Product ");
 
           favorites.push(favoriteProduct);
           localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -78,7 +79,7 @@ const ProductCard = ({ product }) => {
           (fav) => fav.id !== product.id
         );
         localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-
+        console.log(updatedFavorites, "updated favorites");
         // Reset image to original with transition effect
         setCurrentImage(product.image);
       }
